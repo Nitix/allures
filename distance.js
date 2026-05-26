@@ -1,9 +1,14 @@
 // ---------------------------------------------------------------------------
-// Données — extraites de program.json (18 semaines)
+// Données par semaine
 // total = distance hebdo prévue (km) · longRun = distance de la sortie longue (km)
 // theme = phase du programme (context.cycleTheme)
+//
+// Le bloc WEEKS ci-dessous est GÉNÉRÉ depuis program.json — ne pas l'éditer à
+// la main. Pour le régénérer après un changement de programme :
+//   node scripts/extract-program.js
 // ---------------------------------------------------------------------------
 
+// <WEEKS:start>
 const WEEKS = [
   { index: 1, date: 1780272000000, theme: "VMA", total: 41.95, longRun: 11.8 },
   { index: 2, date: 1780876800000, theme: "VMA", total: 38.37, longRun: 0 },
@@ -24,6 +29,7 @@ const WEEKS = [
   { index: 17, date: 1789948800000, theme: "affutage", total: 44.86, longRun: 12.55 },
   { index: 18, date: 1790553600000, theme: "affutage", total: 58.37, longRun: 0 },
 ];
+// <WEEKS:end>
 
 const AFFUTAGE = "affutage";
 
@@ -98,7 +104,7 @@ function renderSummary() {
     {
       value: `${fmtKm(peakLong.longRun)}<span class="intro-item__unit">km</span>`,
       label: `Sortie longue max · S${peakLong.index}`,
-      desc: `Le plus long footing, en ouverture de l'affûtage.`,
+      desc: `Le plus long footing du programme (${themeOf(peakLong).label}).`,
     },
     {
       value: `${recoveries.length}`,
@@ -420,15 +426,24 @@ function renderAffutage() {
 // ---------------------------------------------------------------------------
 
 function renderLegend() {
+  // N'affiche que les phases réellement présentes dans le programme, dans l'ordre de THEMES.
+  const present = Object.keys(THEMES).filter((k) => data.some((w) => w.theme === k));
   document.querySelectorAll("[data-legend]").forEach((legend) => {
     legend.replaceChildren(
-      ...Object.values(THEMES).map((t) => {
+      ...present.map((k) => {
+        const t = THEMES[k];
         const span = document.createElement("span");
         span.className = "chart__legend-item";
         span.innerHTML = `<span class="chart__legend-dot" style="background:${t.color}"></span>${t.label}`;
         return span;
       })
     );
+  });
+}
+
+function renderWeekCount() {
+  document.querySelectorAll("[data-week-count]").forEach((n) => {
+    n.textContent = data.length;
   });
 }
 
@@ -443,4 +458,5 @@ document.addEventListener("DOMContentLoaded", () => {
   renderRecovery();
   renderAffutage();
   renderLegend();
+  renderWeekCount();
 });

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Analyse des distances · Course à pied</title>
-    <meta name="description" content="Analyse du programme marathon sur 18 semaines : volume hebdomadaire, progression des sorties longues et semaines de récupération." />
+    <meta name="description" content="Analyse de mon programme marathon : volume hebdomadaire, progression des sorties longues et semaines de récupération." />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -33,7 +33,7 @@
 
     <header class="hero">
       <div class="hero__inner">
-        <p class="hero__eyebrow">Programme marathon · 18 semaines</p>
+        <p class="hero__eyebrow">Programme marathon · <span data-week-count>—</span> semaines</p>
         <h1 class="hero__title">
           Analyse des <span class="hero__title-accent">distances</span>
         </h1>
@@ -74,7 +74,7 @@
             preserveAspectRatio="xMidYMid meet"
             data-bar-chart
             role="img"
-            aria-label="Diagramme en barres du volume hebdomadaire et de la part des sorties longues sur 18 semaines"
+            aria-label="Diagramme en barres du volume hebdomadaire et de la part des sorties longues, semaine par semaine"
           ></svg>
           <div class="chart__legend" data-legend></div>
           <div class="chart__tooltip" role="tooltip" data-bar-tooltip hidden>
@@ -103,7 +103,7 @@
             preserveAspectRatio="xMidYMid meet"
             data-long-chart
             role="img"
-            aria-label="Courbe de progression des distances de sorties longues sur 18 semaines"
+            aria-label="Courbe de progression des distances de sorties longues, semaine par semaine"
           ></svg>
           <div class="chart__tooltip" role="tooltip" data-long-tooltip hidden>
             <strong data-tip-title></strong>
@@ -117,7 +117,7 @@
         <div class="section__header">
           <h2 id="recovery-title" class="section__title">Semaines de récupération</h2>
           <p class="section__subtitle">
-            À l'intérieur des phases de développement (VMA, S60, Force A42), le
+            À l'intérieur des phases de développement (avant l'affûtage), le
             programme allège régulièrement la charge pour assimiler — un schéma
             de type 3:1. À ne pas confondre avec l'affûtage, qui est une phase à
             part entière (ci-dessous).
@@ -142,7 +142,7 @@
 
     <footer class="footer">
       <p>Analyse du programme · distances en km, volume hebdomadaire prévu.</p>
-      <p class="footer__date">Source : program.json · 18 semaines</p>
+      <p class="footer__date">Source : program.json · <span data-week-count>—</span> semaines</p>
     </footer>
 
     <script src="distance.js" defer></script>
