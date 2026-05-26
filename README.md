@@ -16,9 +16,12 @@ npx http-server . -p 8000
 ## Structure
 
 ```
-index.html     markup sémantique (hero, intro, spectre, sections, calculateur)
+index.html     page d'accueil (hub) — liens vers les rubriques
+allures.html   page des allures (hero, intro, spectre, sections, calculateur)
+distance.html  analyse des distances hebdo + sorties longues (graphiques)
 style.css      design system sombre, layout responsive, animations
-app.js         données, helpers, rendu DOM, interactions
+app.js         données, helpers, rendu DOM, interactions (page allures)
+distance.js    dataset 18 semaines + rendu des graphiques (page distances)
 vercel.json    config de déploiement (clean URLs, cache headers)
 .vercelignore  exclusions pour le déploiement
 ```

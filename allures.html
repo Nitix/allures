@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mes allures · Course à pied</title>
+    <meta name="description" content="Mes allures de course personnelles : compétition, zones d'entraînement et intensités générales — en min/km et km/h." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <div class="site-nav__inner">
+        <a class="site-nav__brand" href="/">
+          <span class="site-nav__brand-dot" aria-hidden="true"></span>
+          Mon espace course
+        </a>
+        <div class="site-nav__links">
+          <a class="site-nav__link" href="/">Accueil</a>
+          <a class="site-nav__link" href="/allures" aria-current="page">Allures</a>
+          <a class="site-nav__link" href="/distance">Distances</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero__inner">
+        <p class="hero__eyebrow">Course à pied · Allures personnelles</p>
+        <h1 class="hero__title">
+          Mes <span class="hero__title-accent">allures</span>
+        </h1>
+        <p class="hero__subtitle">
+          Une allure, c'est la vitesse à laquelle je cours exprimée en
+          <strong>min/km</strong> — le temps pour parcourir un kilomètre.
+          Plus le chiffre est petit, plus on court vite.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section class="section section--intro" aria-labelledby="intro-title">
+        <div class="section__header">
+          <h2 id="intro-title" class="section__title">Comment lire une allure</h2>
+          <p class="section__subtitle">
+            Quatre informations par allure — l'exemple ci-dessous est mon allure
+            marathon.
+          </p>
+        </div>
+
+        <ul class="intro-grid">
+          <li class="intro-item">
+            <span class="intro-item__value">5:13<span class="intro-item__unit">/km</span></span>
+            <span class="intro-item__label">Allure centrale</span>
+            <span class="intro-item__desc">
+              5 min 13 s pour parcourir 1 km. C'est la valeur que je vise.
+            </span>
+          </li>
+          <li class="intro-item">
+            <span class="intro-item__value">4:57 <span class="intro-item__arrow">→</span> 5:28</span>
+            <span class="intro-item__label">Plage de tolérance</span>
+            <span class="intro-item__desc">
+              Une allure n'est pas figée — on travaille dans une fourchette
+              autour du centre.
+            </span>
+          </li>
+          <li class="intro-item">
+            <span class="intro-item__value">11,5<span class="intro-item__unit">km/h</span></span>
+            <span class="intro-item__label">Vitesse équivalente</span>
+            <span class="intro-item__desc">
+              L'équivalent en km/h, pour ceux qui pensent en vitesse plutôt
+              qu'en allure.
+            </span>
+          </li>
+          <li class="intro-item">
+            <span class="intro-item__value">3h39:47</span>
+            <span class="intro-item__label">Temps de course</span>
+            <span class="intro-item__desc">
+              Pour les allures de compétition, le temps total estimé sur la
+              distance officielle.
+            </span>
+          </li>
+        </ul>
+      </section>
+
+      <section class="section section--spectrum" aria-labelledby="spectrum-title">
+        <div class="section__header">
+          <h2 id="spectrum-title" class="section__title">Spectre des allures</h2>
+          <p class="section__subtitle">
+            Du plus lent au plus rapide — survole un point pour voir le détail,
+            clique pour ouvrir la carte correspondante.
+          </p>
+        </div>
+
+        <figure class="spectrum" role="group" aria-label="Spectre des allures">
+          <svg
+            class="spectrum__svg"
+            viewBox="0 0 1000 160"
+            preserveAspectRatio="xMidYMid meet"
+            aria-hidden="true"
+          >
+            <line
+              class="spectrum__axis"
+              x1="20"
+              y1="80"
+              x2="980"
+              y2="80"
+            />
+            <g class="spectrum__points" data-points></g>
+          </svg>
+
+          <div class="spectrum__labels">
+            <span>Lent</span>
+            <span>Rapide</span>
+          </div>
+
+          <div class="spectrum__tooltip" role="tooltip" hidden>
+            <strong data-tip-label></strong>
+            <span data-tip-pace></span>
+            <span data-tip-speed></span>
+          </div>
+        </figure>
+      </section>
+
+      <section class="section" aria-labelledby="competition-title" data-section="competition">
+        <div class="section__header">
+          <h2 id="competition-title" class="section__title">Allures de compétition</h2>
+          <p class="section__subtitle">
+            Mes allures cibles pour les distances officielles, avec le temps de
+            course total estimé.
+          </p>
+        </div>
+        <div class="cards" data-grid="competition"></div>
+      </section>
+
+      <section class="section" aria-labelledby="training-title">
+        <div class="section__header">
+          <h2 id="training-title" class="section__title">Allures d'entraînement</h2>
+          <p class="section__subtitle">
+            Toutes mes allures de travail, de la récupération au sprint —
+            endurance, tempo, seuil, VMA et plus.
+          </p>
+
+          <button
+            class="toggle"
+            type="button"
+            data-toggle-comp
+            aria-pressed="false"
+          >
+            <span class="toggle__switch" aria-hidden="true">
+              <span class="toggle__knob"></span>
+            </span>
+            <span class="toggle__label">Inclure les allures de compétition</span>
+          </button>
+        </div>
+        <div class="cards" data-grid="training"></div>
+      </section>
+
+      <section class="section section--calculator" aria-labelledby="calc-title">
+        <div class="section__header">
+          <h2 id="calc-title" class="section__title">Calculateur de temps</h2>
+          <p class="section__subtitle">
+            Choisis une allure et une distance pour obtenir le temps de course
+            estimé.
+          </p>
+        </div>
+
+        <form class="calculator" data-calculator>
+          <div class="calculator__field">
+            <label for="calc-pace">Allure</label>
+            <select id="calc-pace" data-calc-pace></select>
+          </div>
+
+          <div class="calculator__field">
+            <label for="calc-distance">Distance (km)</label>
+            <input
+              id="calc-distance"
+              type="number"
+              min="0.1"
+              step="0.1"
+              value="10"
+              data-calc-distance
+            />
+          </div>
+
+          <div class="calculator__result" aria-live="polite">
+            <span class="calculator__result-label">Temps estimé</span>
+            <strong class="calculator__result-value" data-calc-result>—</strong>
+            <span class="calculator__result-meta" data-calc-meta></span>
+          </div>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Allures personnelles · Format min/km — vitesse en km/h.
+      </p>
+      <p class="footer__date">
+        Référence du document :
+        <time data-today datetime="">—</time>
+      </p>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

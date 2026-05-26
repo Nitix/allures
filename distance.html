@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Analyse des distances · Course à pied</title>
+    <meta name="description" content="Analyse du programme marathon sur 18 semaines : volume hebdomadaire, progression des sorties longues et semaines de récupération." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <div class="site-nav__inner">
+        <a class="site-nav__brand" href="/">
+          <span class="site-nav__brand-dot" aria-hidden="true"></span>
+          Mon espace course
+        </a>
+        <div class="site-nav__links">
+          <a class="site-nav__link" href="/">Accueil</a>
+          <a class="site-nav__link" href="/allures">Allures</a>
+          <a class="site-nav__link" href="/distance" aria-current="page">Distances</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero__inner">
+        <p class="hero__eyebrow">Programme marathon · 18 semaines</p>
+        <h1 class="hero__title">
+          Analyse des <span class="hero__title-accent">distances</span>
+        </h1>
+        <p class="hero__subtitle">
+          Comment le volume hebdomadaire et mes sorties longues progressent au
+          fil du programme — et où se cachent les semaines de récupération qui
+          font baisser la charge.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <section class="section section--intro" aria-labelledby="summary-title">
+        <div class="section__header">
+          <h2 id="summary-title" class="section__title">En bref</h2>
+          <p class="section__subtitle">
+            Les chiffres clés du bloc, du volume cumulé à la plus longue sortie.
+          </p>
+        </div>
+        <ul class="intro-grid" data-summary></ul>
+      </section>
+
+      <section class="section" aria-labelledby="volume-title">
+        <div class="section__header">
+          <h2 id="volume-title" class="section__title">Volume hebdomadaire</h2>
+          <p class="section__subtitle">
+            Chaque barre = le volume total de la semaine ; la portion pleine
+            représente la sortie longue. Les barres en pointillés marquées
+            <span class="chart__down">▼</span> sont les semaines de récupération.
+            La bande de couleur sous l'axe indique la phase du programme.
+          </p>
+        </div>
+
+        <figure class="chart">
+          <svg
+            class="chart__svg"
+            viewBox="0 0 1000 412"
+            preserveAspectRatio="xMidYMid meet"
+            data-bar-chart
+            role="img"
+            aria-label="Diagramme en barres du volume hebdomadaire et de la part des sorties longues sur 18 semaines"
+          ></svg>
+          <div class="chart__legend" data-legend></div>
+          <div class="chart__tooltip" role="tooltip" data-bar-tooltip hidden>
+            <strong data-tip-title></strong>
+            <span data-tip-total></span>
+            <span data-tip-long></span>
+            <span class="chart__tooltip-change" data-tip-change></span>
+          </div>
+        </figure>
+      </section>
+
+      <section class="section" aria-labelledby="long-title">
+        <div class="section__header">
+          <h2 id="long-title" class="section__title">Progression des sorties longues</h2>
+          <p class="section__subtitle">
+            La distance de la sortie longue, semaine après semaine. Elle grimpe
+            jusqu'au pic puis redescend à l'affûtage ; les creux correspondent
+            aux semaines de récupération.
+          </p>
+        </div>
+
+        <figure class="chart">
+          <svg
+            class="chart__svg"
+            viewBox="0 0 1000 300"
+            preserveAspectRatio="xMidYMid meet"
+            data-long-chart
+            role="img"
+            aria-label="Courbe de progression des distances de sorties longues sur 18 semaines"
+          ></svg>
+          <div class="chart__tooltip" role="tooltip" data-long-tooltip hidden>
+            <strong data-tip-title></strong>
+            <span data-tip-long></span>
+            <span class="chart__tooltip-change" data-tip-sub></span>
+          </div>
+        </figure>
+      </section>
+
+      <section class="section" aria-labelledby="recovery-title">
+        <div class="section__header">
+          <h2 id="recovery-title" class="section__title">Semaines de récupération</h2>
+          <p class="section__subtitle">
+            À l'intérieur des phases de développement (VMA, S60, Force A42), le
+            programme allège régulièrement la charge pour assimiler — un schéma
+            de type 3:1. À ne pas confondre avec l'affûtage, qui est une phase à
+            part entière (ci-dessous).
+          </p>
+        </div>
+        <ul class="intro-grid" data-recovery></ul>
+      </section>
+
+      <section class="section section--calculator" aria-labelledby="affutage-title">
+        <div class="section__header">
+          <h2 id="affutage-title" class="section__title">Affûtage</h2>
+          <p class="section__subtitle">
+            La phase finale avant la course. Elle s'ouvre sur la plus longue
+            sortie du programme, puis le volume baisse progressivement pour
+            arriver frais le jour J — ce n'est pas une récup, c'est la mise en
+            condition.
+          </p>
+        </div>
+        <ul class="intro-grid" data-affutage></ul>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Analyse du programme · distances en km, volume hebdomadaire prévu.</p>
+      <p class="footer__date">Source : program.json · 18 semaines</p>
+    </footer>
+
+    <script src="distance.js" defer></script>
+  </body>
+</html>
