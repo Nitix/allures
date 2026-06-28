@@ -108,7 +108,7 @@ function renderSummary() {
     {
       value: `${fmtKm(peakLong.longRun)}<span class="intro-item__unit">km</span>`,
       label: `Sortie longue max · S${peakLong.index}`,
-      desc: `Le plus long footing, en ouverture de l'affûtage.`,
+      desc: `Le plus long footing du bloc (${themeOf(peakLong).label}).`,
     },
     {
       value: `${recoveries.length}`,
@@ -284,15 +284,23 @@ function renderGroupedCompare({ svgSel, legendSel, tooltipSel, prev, cur, unit, 
     const pv = prev[i];
     const cv = cur[i];
     const delta = cv - pv;
+    // Semaine sans donnée (aucune des deux barres) : on n'en fait pas un point
+    // focusable/annoncé « 0 km », on ne garde que le libellé de semaine.
+    const hasData = pv > 0 || cv > 0;
 
-    const group = el("g", {
-      class: "chart__cmp-group",
-      tabindex: "0",
-      role: "button",
-      "aria-label": `Semaine ${w.index} : ${fmtKm(pv)} ${unit} le ${PREVIOUS.label}, ${fmtKm(
-        cv
-      )} ${unit} le ${CURRENT_LABEL}`,
-    });
+    const group = el(
+      "g",
+      hasData
+        ? {
+            class: "chart__cmp-group",
+            tabindex: "0",
+            role: "button",
+            "aria-label": `Semaine ${w.index} : ${fmtKm(pv)} ${unit} le ${PREVIOUS.label}, ${fmtKm(
+              cv
+            )} ${unit} le ${CURRENT_LABEL}`,
+          }
+        : { class: "chart__cmp-group" }
+    );
 
     if (pv > 0) {
       group.appendChild(
@@ -309,25 +317,27 @@ function renderGroupedCompare({ svgSel, legendSel, tooltipSel, prev, cur, unit, 
     wl.textContent = w.index;
     group.appendChild(wl);
 
-    const show = (evt) => {
-      tooltip.querySelector("[data-tip-title]").textContent = `Semaine ${w.index} · ${fmtDate(w.date)}`;
-      tooltip.querySelector("[data-tip-prev]").textContent = `${PREVIOUS.label} : ${fmtKm(pv)} ${unit}`;
-      tooltip.querySelector("[data-tip-cur]").textContent = `${CURRENT_LABEL} : ${fmtKm(cv)} ${unit}`;
-      const d = tooltip.querySelector("[data-tip-delta]");
-      d.textContent = `${delta >= 0 ? "+" : ""}${fmtKm(delta)} ${unit} · ${fmtPct(pv ? delta / pv : 0)}`;
-      d.classList.toggle("is-down", delta < 0);
+    if (hasData) {
+      const show = (evt) => {
+        tooltip.querySelector("[data-tip-title]").textContent = `Semaine ${w.index} · ${fmtDate(w.date)}`;
+        tooltip.querySelector("[data-tip-prev]").textContent = `${PREVIOUS.label} : ${fmtKm(pv)} ${unit}`;
+        tooltip.querySelector("[data-tip-cur]").textContent = `${CURRENT_LABEL} : ${fmtKm(cv)} ${unit}`;
+        const d = tooltip.querySelector("[data-tip-delta]");
+        d.textContent = `${delta >= 0 ? "+" : ""}${fmtKm(delta)} ${unit} · ${fmtPct(pv ? delta / pv : 0)}`;
+        d.classList.toggle("is-down", delta < 0);
 
-      const rect = wrap.getBoundingClientRect();
-      const target = evt.currentTarget.getBoundingClientRect();
-      tooltip.style.left = `${target.left + target.width / 2 - rect.left}px`;
-      tooltip.style.top = `${target.top - rect.top - 6}px`;
-      tooltip.hidden = false;
-    };
-    const hide = () => (tooltip.hidden = true);
-    group.addEventListener("mouseenter", show);
-    group.addEventListener("focus", show);
-    group.addEventListener("mouseleave", hide);
-    group.addEventListener("blur", hide);
+        const rect = wrap.getBoundingClientRect();
+        const target = evt.currentTarget.getBoundingClientRect();
+        tooltip.style.left = `${target.left + target.width / 2 - rect.left}px`;
+        tooltip.style.top = `${target.top - rect.top - 6}px`;
+        tooltip.hidden = false;
+      };
+      const hide = () => (tooltip.hidden = true);
+      group.addEventListener("mouseenter", show);
+      group.addEventListener("focus", show);
+      group.addEventListener("mouseleave", hide);
+      group.addEventListener("blur", hide);
+    }
 
     svg.appendChild(group);
   });

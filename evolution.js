@@ -188,11 +188,11 @@ function secToKmh(sec) {
   return (3600 / sec).toFixed(1).replace(".", ",");
 }
 
-/** total seconds → "3h24" (heures + minutes arrondies) */
+/** total seconds → "3h24" (heures + minutes, arrondi à la minute) */
 function formatRaceTimeShort(totalSeconds) {
-  const total = Math.round(totalSeconds);
-  const h = Math.floor(total / 3600);
-  const m = Math.round((total % 3600) / 60);
+  const totalMin = Math.round(totalSeconds / 60);
+  const h = Math.floor(totalMin / 60);
+  const m = totalMin % 60;
   return h > 0 ? `${h}h${String(m).padStart(2, "0")}` : `${m} min`;
 }
 
@@ -333,11 +333,22 @@ function createEvolutionCard(cmp, slug) {
   return card;
 }
 
+/**
+ * META slugs présents (en nombre) dans CHAQUE relevé d'une comparaison.
+ * Garde-fou : si un futur relevé oublie une allure, on l'omet proprement au
+ * lieu d'afficher des « NaN ».
+ */
+function availableSlugs(cmp) {
+  return Object.keys(META).filter((slug) =>
+    cmp.readings.every((r) => typeof r.paces[slug] === "number")
+  );
+}
+
 function renderGroup(cmp, group, selector) {
   const grid = document.querySelector(selector);
   if (!grid) return;
   const last = cmp.readings[cmp.readings.length - 1];
-  const slugs = Object.keys(META)
+  const slugs = availableSlugs(cmp)
     .filter((slug) => META[slug].group === group)
     .sort((a, b) => last.paces[b] - last.paces[a]); // plus lent → plus rapide
   grid.replaceChildren(...slugs.map((slug) => createEvolutionCard(cmp, slug)));
@@ -348,8 +359,9 @@ function renderGroup(cmp, group, selector) {
 // ---------------------------------------------------------------------------
 
 function buildSummaryItems(cmp) {
-  const slugs = Object.keys(META);
+  const slugs = availableSlugs(cmp);
   const changes = slugs.map((slug) => ({ slug, ...changeFor(cmp, slug) }));
+  if (!changes.length) return [];
   const fasterCount = changes.filter((c) => c.direction === "faster").length;
   const best = changes.reduce((a, b) => (b.delta < a.delta ? b : a));
   const first = cmp.readings[0];
@@ -478,17 +490,35 @@ function renderComparison(key) {
 
 function setupTabs() {
   const tabs = [...document.querySelectorAll("[data-tab]")];
+  const panel = document.getElementById("evo-panel");
 
-  const activate = (key) => {
+  // Onglets ARIA : roving tabindex (un seul onglet tabbable), aria-selected,
+  // et le panneau pointe vers l'onglet actif via aria-labelledby.
+  const activate = (key, { focus = false } = {}) => {
     tabs.forEach((tab) => {
       const on = tab.dataset.tab === key;
       tab.setAttribute("aria-selected", String(on));
+      tab.tabIndex = on ? 0 : -1;
+      if (on) {
+        if (panel && tab.id) panel.setAttribute("aria-labelledby", tab.id);
+        if (focus) tab.focus();
+      }
     });
     renderComparison(key);
   };
 
-  tabs.forEach((tab) => {
+  tabs.forEach((tab, i) => {
     tab.addEventListener("click", () => activate(tab.dataset.tab));
+    tab.addEventListener("keydown", (e) => {
+      let next = -1;
+      if (e.key === "ArrowRight" || e.key === "ArrowDown") next = (i + 1) % tabs.length;
+      else if (e.key === "ArrowLeft" || e.key === "ArrowUp") next = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === "Home") next = 0;
+      else if (e.key === "End") next = tabs.length - 1;
+      if (next === -1) return;
+      e.preventDefault();
+      activate(tabs[next].dataset.tab, { focus: true });
+    });
   });
 
   activate("progress");

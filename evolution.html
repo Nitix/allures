@@ -39,10 +39,11 @@
           L'<span class="hero__title-accent">évolution</span> de mes allures
         </h1>
         <p class="hero__subtitle">
-          Deux regards sur mes allures : ma <strong>progression réelle</strong>
-          d'un relevé à l'autre, et l'écart entre mes allures
-          <strong>actuelles</strong> et celles <strong>estimées</strong> en fin
-          de plan.
+          Trois regards sur mes allures : ma <strong>progression réelle</strong>
+          d'un relevé à l'autre, l'écart entre ce qui était
+          <strong>prévu</strong> et le <strong>réel</strong> du jour, et la
+          marche entre mes allures <strong>actuelles</strong> et celles
+          <strong>estimées</strong> en fin de plan.
         </p>
       </div>
     </header>
@@ -53,7 +54,9 @@
           class="evo-tab"
           type="button"
           role="tab"
+          id="evo-tab-progress"
           data-tab="progress"
+          aria-controls="evo-panel"
           aria-selected="true"
         >
           Au début <span class="evo-tab__arrow" aria-hidden="true">→</span> maintenant
@@ -62,8 +65,11 @@
           class="evo-tab"
           type="button"
           role="tab"
+          id="evo-tab-forecast"
           data-tab="forecast"
+          aria-controls="evo-panel"
           aria-selected="false"
+          tabindex="-1"
         >
           Prévu <span class="evo-tab__arrow" aria-hidden="true">→</span> réel
         </button>
@@ -71,13 +77,17 @@
           class="evo-tab"
           type="button"
           role="tab"
+          id="evo-tab-plan"
           data-tab="plan"
+          aria-controls="evo-panel"
           aria-selected="false"
+          tabindex="-1"
         >
           Actuelles <span class="evo-tab__arrow" aria-hidden="true">→</span> estimées
         </button>
       </div>
 
+      <div id="evo-panel" role="tabpanel" tabindex="0" aria-labelledby="evo-tab-progress">
       <section class="section section--intro" aria-labelledby="summary-title">
         <div class="section__header">
           <h2 id="summary-title" class="section__title" data-cmp-title>En bref</h2>
@@ -110,6 +120,7 @@
         </div>
         <div class="cards" data-grid="training"></div>
       </section>
+      </div>
     </main>
 
     <footer class="footer">

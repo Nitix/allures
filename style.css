@@ -1354,6 +1354,16 @@ a {
   opacity: 0.8;
 }
 
+/* Visible keyboard focus for interactive SVG nodes (WCAG 2.4.7) — the faint
+   fill shift alone wasn't a discernible focus indicator. */
+.spectrum__point:focus-visible,
+.chart__bar:focus-visible,
+.chart__dot:focus-visible,
+.chart__cmp-group:focus-visible {
+  outline: 2px solid var(--zone-tempo);
+  outline-offset: 2px;
+}
+
 /* Programme-to-programme distance comparison badge (neutral — more volume is
    neither good nor bad, just the newer plan being a bit bigger). */
 .dist-cmp__delta {

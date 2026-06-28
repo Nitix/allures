@@ -131,9 +131,9 @@ function secToMinKm(sec) {
   return `${m}:${String(s).padStart(2, "0")}`;
 }
 
-/** seconds per km → km/h with 1 decimal */
+/** seconds per km → km/h with 1 decimal, comma as decimal separator (fr) */
 function secToKmh(sec) {
-  return (3600 / sec).toFixed(1);
+  return (3600 / sec).toFixed(1).replace(".", ",");
 }
 
 /** total seconds → "42:13" or "3h05:42" */
@@ -160,11 +160,11 @@ function paceRange(value, dvalue) {
   };
 }
 
-/** Returns the speed range as { min, max } in km/h (1 decimal). */
+/** Returns the speed range as { min, max } in km/h (1 decimal, fr comma). */
 function speedRange(value, dvalue) {
   return {
-    min: (3600 / (value + dvalue)).toFixed(1),
-    max: (3600 / (value - dvalue)).toFixed(1),
+    min: (3600 / (value + dvalue)).toFixed(1).replace(".", ","),
+    max: (3600 / (value - dvalue)).toFixed(1).replace(".", ","),
   };
 }
 
