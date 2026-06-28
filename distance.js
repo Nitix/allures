@@ -1,29 +1,39 @@
 // ---------------------------------------------------------------------------
-// Données — extraites de program.json (18 semaines)
+// Données — extraites du programme courant program-28-06.json (18 semaines)
 // total = distance hebdo prévue (km) · longRun = distance de la sortie longue (km)
 // theme = phase du programme (context.cycleTheme)
 // ---------------------------------------------------------------------------
 
 const WEEKS = [
-  { index: 1, date: 1780272000000, theme: "VMA", total: 41.95, longRun: 11.8 },
-  { index: 2, date: 1780876800000, theme: "VMA", total: 38.37, longRun: 0 },
-  { index: 3, date: 1781481600000, theme: "VMA", total: 28.82, longRun: 8.22 },
-  { index: 4, date: 1782086400000, theme: "S60", total: 44.89, longRun: 13.77 },
-  { index: 5, date: 1782691200000, theme: "S60", total: 46.54, longRun: 14.88 },
-  { index: 6, date: 1783296000000, theme: "S60", total: 33.8, longRun: 9.92 },
-  { index: 7, date: 1783900800000, theme: "S60", total: 46.14, longRun: 13.85 },
-  { index: 8, date: 1784505600000, theme: "S60", total: 48.43, longRun: 14.96 },
-  { index: 9, date: 1785110400000, theme: "S60", total: 51.88, longRun: 17.38 },
-  { index: 10, date: 1785715200000, theme: "S60", total: 35.02, longRun: 10.86 },
-  { index: 11, date: 1786320000000, theme: "Force_A42", total: 58.23, longRun: 18.78 },
-  { index: 12, date: 1786924800000, theme: "Force_A42", total: 61.28, longRun: 20.17 },
-  { index: 13, date: 1787529600000, theme: "Force_A42", total: 66.43, longRun: 23.67 },
-  { index: 14, date: 1788134400000, theme: "Force_A42", total: 44.45, longRun: 15.21 },
-  { index: 15, date: 1788739200000, theme: "affutage", total: 63.8, longRun: 27.08 },
-  { index: 16, date: 1789344000000, theme: "affutage", total: 57.05, longRun: 19.13 },
-  { index: 17, date: 1789948800000, theme: "affutage", total: 44.86, longRun: 12.55 },
-  { index: 18, date: 1790553600000, theme: "affutage", total: 58.37, longRun: 0 },
+  { index: 1, date: 1780272000000, theme: "VMA", total: 41.84, longRun: 11.78 },
+  { index: 2, date: 1780876800000, theme: "VMA", total: 38.3, longRun: 0 },
+  { index: 3, date: 1781481600000, theme: "VMA", total: 29.39, longRun: 8.38 },
+  { index: 4, date: 1782086400000, theme: "S60", total: 44.86, longRun: 12.01 },
+  { index: 5, date: 1782691200000, theme: "S60", total: 47.89, longRun: 15.17 },
+  { index: 6, date: 1783296000000, theme: "S60", total: 34.57, longRun: 10.14 },
+  { index: 7, date: 1783900800000, theme: "S60", total: 47.18, longRun: 14.16 },
+  { index: 8, date: 1784505600000, theme: "S60", total: 49.43, longRun: 15.25 },
+  { index: 9, date: 1785110400000, theme: "S60", total: 52.98, longRun: 17.74 },
+  { index: 10, date: 1785715200000, theme: "S60", total: 35.72, longRun: 11.08 },
+  { index: 11, date: 1786320000000, theme: "Force_A42", total: 59.45, longRun: 19.15 },
+  { index: 12, date: 1786924800000, theme: "Force_A42", total: 62.58, longRun: 20.57 },
+  { index: 13, date: 1787529600000, theme: "Force_A42", total: 67.85, longRun: 24.17 },
+  { index: 14, date: 1788134400000, theme: "Force_A42", total: 45.36, longRun: 15.52 },
+  { index: 15, date: 1788739200000, theme: "affutage", total: 65.15, longRun: 27.68 },
+  { index: 16, date: 1789344000000, theme: "affutage", total: 58.26, longRun: 19.55 },
+  { index: 17, date: 1789948800000, theme: "affutage", total: 45.8, longRun: 12.82 },
+  { index: 18, date: 1790553600000, theme: "affutage", total: 58.71, longRun: 0 },
 ];
+
+// Comparaison entre programmes : volumes du plan PRÉCÉDENT (program-26-05.json),
+// alignés par semaine sur WEEKS. Pour ajouter un futur relevé, déplacez ces
+// valeurs vers le nouveau « précédent » et mettez WEEKS à jour.
+const PREVIOUS = {
+  label: "26 mai",
+  totals: [41.95, 38.37, 28.82, 44.89, 46.54, 33.8, 46.14, 48.43, 51.88, 35.02, 58.23, 61.28, 66.43, 44.45, 63.8, 57.05, 44.86, 58.37],
+  longRuns: [11.8, 0, 8.22, 13.77, 14.88, 9.92, 13.85, 14.96, 17.38, 10.86, 18.78, 20.17, 23.67, 15.21, 27.08, 19.13, 12.55, 0],
+};
+const CURRENT_LABEL = "28 juin";
 
 const AFFUTAGE = "affutage";
 
@@ -123,6 +133,78 @@ function renderSummary() {
 }
 
 // ---------------------------------------------------------------------------
+// Comparaison entre programmes (26 mai → 28 juin)
+// ---------------------------------------------------------------------------
+
+function renderComparison() {
+  const grid = document.querySelector("[data-compare]");
+  if (!grid) return;
+
+  const sum = (a) => a.reduce((x, y) => x + y, 0);
+  const avg = (a) => sum(a) / a.length;
+  const max = (a) => Math.max(...a);
+
+  const curTotals = WEEKS.map((w) => w.total);
+  const curLongs = WEEKS.map((w) => w.longRun);
+
+  const metrics = [
+    {
+      before: sum(PREVIOUS.totals),
+      after: sum(curTotals),
+      unit: "km",
+      label: "Volume total du bloc",
+      desc: `Cumul des ${WEEKS.length} semaines du plan.`,
+    },
+    {
+      before: avg(PREVIOUS.totals),
+      after: avg(curTotals),
+      unit: "km",
+      label: "Volume moyen / semaine",
+      desc: "Charge hebdomadaire moyenne sur le bloc.",
+    },
+    {
+      before: max(PREVIOUS.totals),
+      after: max(curTotals),
+      unit: "km",
+      label: "Pic hebdomadaire",
+      desc: "La semaine la plus chargée du programme.",
+    },
+    {
+      before: max(PREVIOUS.longRuns),
+      after: max(curLongs),
+      unit: "km",
+      label: "Sortie longue max",
+      desc: "Le plus long footing, en ouverture de l'affûtage.",
+    },
+  ];
+
+  grid.replaceChildren(
+    ...metrics.map((m) => {
+      const delta = m.after - m.before;
+      const pct = m.before ? delta / m.before : 0;
+      const dir = Math.abs(delta) < 0.05 ? "flat" : delta > 0 ? "up" : "down";
+      const sign = delta > 0 ? "+" : "";
+      const li = document.createElement("li");
+      li.className = "intro-item";
+      li.innerHTML = `
+        <span class="intro-item__value">${fmtKm(m.before)}<span class="intro-item__arrow">→</span>${fmtKm(
+        m.after
+      )}<span class="intro-item__unit">${m.unit}</span></span>
+        <span class="dist-cmp__delta dist-cmp__delta--${dir}">${sign}${fmtKm(
+        delta
+      )} ${m.unit} · ${fmtPct(pct)}</span>
+        <span class="intro-item__label">${m.label}</span>
+        <span class="intro-item__desc">${m.desc}</span>`;
+      return li;
+    })
+  );
+}
+
+// Couleurs des deux programmes comparés.
+const PREV_COLOR = "var(--text-dim)";
+const CUR_COLOR = "var(--zone-tempo)";
+
+// ---------------------------------------------------------------------------
 // SVG helper
 // ---------------------------------------------------------------------------
 
@@ -160,6 +242,134 @@ function phaseSpans() {
     else spans.push({ theme: w.theme, start: i, end: i });
   });
   return spans;
+}
+
+// ---------------------------------------------------------------------------
+// Graphiques de comparaison — deux programmes, barres groupées par semaine.
+// Générique : utilisé pour le volume hebdo ET les sorties longues.
+// ---------------------------------------------------------------------------
+
+function renderGroupedCompare({ svgSel, legendSel, tooltipSel, prev, cur, unit, step }) {
+  const svg = document.querySelector(svgSel);
+  if (!svg) return;
+
+  const W = 1000;
+  const H = 360;
+  const m = { top: 24, right: 16, bottom: 56, left: 44 };
+  const plotW = W - m.left - m.right;
+  const plotH = H - m.top - m.bottom;
+  const baseY = m.top + plotH;
+  const n = WEEKS.length;
+
+  const maxY = Math.ceil(Math.max(...prev, ...cur) / step) * step;
+  const y = (v) => m.top + plotH * (1 - v / maxY);
+  const band = plotW / n;
+  const barW = band * 0.3;
+  const pairGap = band * 0.06;
+
+  for (let v = 0; v <= maxY; v += step) {
+    svg.appendChild(
+      el("line", { class: "chart__grid-line", x1: m.left, y1: y(v), x2: W - m.right, y2: y(v) })
+    );
+    const label = el("text", { class: "chart__grid-label", x: m.left - 8, y: y(v) + 4, "text-anchor": "end" });
+    label.textContent = v;
+    svg.appendChild(label);
+  }
+
+  const tooltip = document.querySelector(tooltipSel);
+  const wrap = svg.closest(".chart");
+
+  WEEKS.forEach((w, i) => {
+    const cx = m.left + band * i + band / 2;
+    const pv = prev[i];
+    const cv = cur[i];
+    const delta = cv - pv;
+
+    const group = el("g", {
+      class: "chart__cmp-group",
+      tabindex: "0",
+      role: "button",
+      "aria-label": `Semaine ${w.index} : ${fmtKm(pv)} ${unit} le ${PREVIOUS.label}, ${fmtKm(
+        cv
+      )} ${unit} le ${CURRENT_LABEL}`,
+    });
+
+    if (pv > 0) {
+      group.appendChild(
+        el("rect", { class: "chart__cmp-bar", x: cx - pairGap / 2 - barW, y: y(pv), width: barW, height: baseY - y(pv), rx: 3, fill: PREV_COLOR })
+      );
+    }
+    if (cv > 0) {
+      group.appendChild(
+        el("rect", { class: "chart__cmp-bar", x: cx + pairGap / 2, y: y(cv), width: barW, height: baseY - y(cv), rx: 3, fill: CUR_COLOR })
+      );
+    }
+
+    const wl = el("text", { class: "chart__week-label", x: cx, y: baseY + 18, "text-anchor": "middle" });
+    wl.textContent = w.index;
+    group.appendChild(wl);
+
+    const show = (evt) => {
+      tooltip.querySelector("[data-tip-title]").textContent = `Semaine ${w.index} · ${fmtDate(w.date)}`;
+      tooltip.querySelector("[data-tip-prev]").textContent = `${PREVIOUS.label} : ${fmtKm(pv)} ${unit}`;
+      tooltip.querySelector("[data-tip-cur]").textContent = `${CURRENT_LABEL} : ${fmtKm(cv)} ${unit}`;
+      const d = tooltip.querySelector("[data-tip-delta]");
+      d.textContent = `${delta >= 0 ? "+" : ""}${fmtKm(delta)} ${unit} · ${fmtPct(pv ? delta / pv : 0)}`;
+      d.classList.toggle("is-down", delta < 0);
+
+      const rect = wrap.getBoundingClientRect();
+      const target = evt.currentTarget.getBoundingClientRect();
+      tooltip.style.left = `${target.left + target.width / 2 - rect.left}px`;
+      tooltip.style.top = `${target.top - rect.top - 6}px`;
+      tooltip.hidden = false;
+    };
+    const hide = () => (tooltip.hidden = true);
+    group.addEventListener("mouseenter", show);
+    group.addEventListener("focus", show);
+    group.addEventListener("mouseleave", hide);
+    group.addEventListener("blur", hide);
+
+    svg.appendChild(group);
+  });
+
+  const legend = legendSel && document.querySelector(legendSel);
+  if (legend) {
+    legend.replaceChildren(
+      ...[
+        { label: `${PREVIOUS.label} (précédent)`, color: PREV_COLOR },
+        { label: `${CURRENT_LABEL} (actuel)`, color: CUR_COLOR },
+      ].map((t) => {
+        const span = document.createElement("span");
+        span.className = "chart__legend-item";
+        span.innerHTML = `<span class="chart__legend-dot" style="background:${t.color}"></span>${t.label}`;
+        return span;
+      })
+    );
+  }
+}
+
+function renderCompareCharts() {
+  // Volume hebdomadaire (km)
+  renderGroupedCompare({
+    svgSel: "[data-compare-chart]",
+    legendSel: "[data-compare-legend]",
+    tooltipSel: "[data-compare-tooltip]",
+    prev: PREVIOUS.totals,
+    cur: WEEKS.map((w) => w.total),
+    unit: "km",
+    step: 10,
+  });
+  // Sorties longues (km) — même durée d'un plan à l'autre, mais plus de distance
+  // grâce à l'allure, d'où la comparaison en distance.
+  renderGroupedCompare({
+    svgSel: "[data-compare-long-chart]",
+    legendSel: null, // légende déjà affichée sur le graphique du dessus
+    tooltipSel: "[data-compare-long-tooltip]",
+    prev: PREVIOUS.longRuns,
+    cur: WEEKS.map((w) => w.longRun),
+    unit: "km",
+    step: 5,
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -438,6 +648,8 @@ function renderLegend() {
 
 document.addEventListener("DOMContentLoaded", () => {
   renderSummary();
+  renderComparison();
+  renderCompareCharts();
   renderBarChart();
   renderLongRunChart();
   renderRecovery();

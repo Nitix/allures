@@ -1316,6 +1316,70 @@ a {
   color: var(--text-muted);
 }
 
+/* Spacing when a chart follows the comparison tiles, or another chart */
+.intro-grid + .chart,
+.chart + .chart {
+  margin-top: clamp(28px, 4vw, 40px);
+}
+
+/* Caption above a chart (used to label the two comparison charts) */
+.chart__caption {
+  margin-bottom: 14px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+
+.chart__caption-note {
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 400;
+  color: var(--text-dim);
+}
+
+/* Grouped comparison bars (two programmes, distance page) */
+.chart__cmp-group {
+  cursor: pointer;
+  outline: none;
+}
+
+.chart__cmp-bar {
+  transition: opacity 0.15s ease;
+}
+
+.chart__cmp-group:hover .chart__cmp-bar,
+.chart__cmp-group:focus-visible .chart__cmp-bar {
+  opacity: 0.8;
+}
+
+/* Programme-to-programme distance comparison badge (neutral — more volume is
+   neither good nor bad, just the newer plan being a bit bigger). */
+.dist-cmp__delta {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: var(--surface-elevated);
+  color: var(--text-muted);
+}
+
+.dist-cmp__delta--up {
+  border-color: color-mix(in srgb, var(--zone-tempo) 40%, var(--border));
+  background: color-mix(in srgb, var(--zone-tempo) 12%, var(--surface));
+  color: var(--zone-tempo);
+}
+
+.dist-cmp__delta--down {
+  border-color: color-mix(in srgb, var(--zone-vma) 40%, var(--border));
+  background: color-mix(in srgb, var(--zone-vma) 12%, var(--surface));
+  color: var(--zone-vma);
+}
+
 /* Inline legend chips in the section subtitles */
 .evo-legend {
   font-weight: 600;

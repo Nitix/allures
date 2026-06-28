@@ -127,7 +127,7 @@
         <ul class="intro-grid" data-recovery></ul>
       </section>
 
-      <section class="section section--calculator" aria-labelledby="affutage-title">
+      <section class="section" aria-labelledby="affutage-title">
         <div class="section__header">
           <h2 id="affutage-title" class="section__title">Affûtage</h2>
           <p class="section__subtitle">
@@ -139,11 +139,65 @@
         </div>
         <ul class="intro-grid" data-affutage></ul>
       </section>
+
+      <section class="section section--calculator" aria-labelledby="compare-title">
+        <div class="section__header">
+          <h2 id="compare-title" class="section__title">D'un programme à l'autre</h2>
+          <p class="section__subtitle">
+            Ce qui a bougé entre mon plan du 26 mai et celui du 28 juin. La
+            structure (phases, semaines de récup, affûtage) est identique — seules
+            les distances évoluent, légèrement à la hausse, semaine après semaine.
+          </p>
+        </div>
+        <ul class="intro-grid" data-compare></ul>
+
+        <figure class="chart">
+          <figcaption class="chart__caption">Volume hebdomadaire · km</figcaption>
+          <svg
+            class="chart__svg"
+            viewBox="0 0 1000 360"
+            preserveAspectRatio="xMidYMid meet"
+            data-compare-chart
+            role="img"
+            aria-label="Histogramme comparant le volume hebdomadaire des programmes du 26 mai et du 28 juin sur 18 semaines"
+          ></svg>
+          <div class="chart__legend" data-compare-legend></div>
+          <div class="chart__tooltip" role="tooltip" data-compare-tooltip hidden>
+            <strong data-tip-title></strong>
+            <span data-tip-prev></span>
+            <span data-tip-cur></span>
+            <span class="chart__tooltip-change" data-tip-delta></span>
+          </div>
+        </figure>
+
+        <figure class="chart">
+          <figcaption class="chart__caption">
+            Sortie longue · km
+            <span class="chart__caption-note">— même durée prévue, mais plus de distance grâce à l'allure</span>
+          </figcaption>
+          <svg
+            class="chart__svg"
+            viewBox="0 0 1000 360"
+            preserveAspectRatio="xMidYMid meet"
+            data-compare-long-chart
+            role="img"
+            aria-label="Histogramme comparant la distance des sorties longues des programmes du 26 mai et du 28 juin sur 18 semaines"
+          ></svg>
+          <div class="chart__tooltip" role="tooltip" data-compare-long-tooltip hidden>
+            <strong data-tip-title></strong>
+            <span data-tip-prev></span>
+            <span data-tip-cur></span>
+            <span class="chart__tooltip-change" data-tip-delta></span>
+          </div>
+        </figure>
+      </section>
     </main>
 
     <footer class="footer">
       <p>Analyse du programme · distances en km, volume hebdomadaire prévu.</p>
-      <p class="footer__date">Source : program.json · 18 semaines</p>
+      <p class="footer__date">
+        Source : program-28-06.json · 18 semaines (comparé à program-26-05.json)
+      </p>
     </footer>
 
     <script src="distance.js" defer></script>
