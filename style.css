@@ -1112,3 +1112,181 @@ a {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------- EVOLUTION ---------- */
+
+/* Segmented control to switch between the two comparisons */
+.evo-tabs {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: clamp(28px, 5vw, 44px) var(--gutter) 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.evo-tab {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 18px;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  cursor: pointer;
+  transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.evo-tab:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+  transform: translateY(-1px);
+}
+
+.evo-tab:focus-visible {
+  outline: none;
+  border-color: var(--zone-tempo);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--zone-tempo) 25%, transparent);
+}
+
+.evo-tab__arrow {
+  font-family: var(--font-mono);
+  color: var(--text-dim);
+}
+
+.evo-tab[aria-selected="true"] {
+  color: var(--text);
+  background: color-mix(in srgb, var(--zone-tempo) 14%, var(--surface));
+  border-color: color-mix(in srgb, var(--zone-tempo) 45%, var(--border));
+}
+
+.evo-tab[aria-selected="true"] .evo-tab__arrow {
+  color: var(--zone-tempo);
+}
+
+.evo-card {
+  gap: 18px;
+}
+
+/* Timeline of dated readings: pace value over its date, linked by arrows.
+   Scales naturally as more snapshots are added (wraps on narrow screens). */
+.evo-track {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 10px 12px;
+}
+
+.evo-step {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.evo-step__pace {
+  font-family: var(--font-mono);
+  font-size: clamp(28px, 4vw, 38px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text-muted);
+}
+
+.evo-step--current .evo-step__pace {
+  color: var(--text);
+}
+
+.evo-step__date {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+}
+
+.evo-step--current .evo-step__date {
+  color: var(--card-color, var(--text-muted));
+}
+
+.evo-arrow {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  color: var(--text-dim);
+  line-height: 1;
+  align-self: center;
+  padding-bottom: 14px;
+}
+
+/* Overall change badge (first → last reading) */
+.evo-delta {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  align-self: flex-start;
+  padding: 6px 14px;
+  border-radius: 99px;
+  border: 1px solid var(--border);
+  background: var(--surface-elevated);
+}
+
+.evo-delta__arrow {
+  font-size: 15px;
+  line-height: 1;
+}
+
+.evo-delta__value {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.evo-delta__label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-muted);
+}
+
+.evo-delta--faster {
+  border-color: color-mix(in srgb, var(--zone-easy) 40%, var(--border));
+  background: color-mix(in srgb, var(--zone-easy) 12%, var(--surface));
+}
+.evo-delta--faster .evo-delta__arrow,
+.evo-delta--faster .evo-delta__value {
+  color: var(--zone-easy);
+}
+
+.evo-delta--slower {
+  border-color: color-mix(in srgb, var(--zone-sprint) 40%, var(--border));
+  background: color-mix(in srgb, var(--zone-sprint) 12%, var(--surface));
+}
+.evo-delta--slower .evo-delta__arrow,
+.evo-delta--slower .evo-delta__value {
+  color: var(--zone-sprint);
+}
+
+.evo-delta--flat .evo-delta__arrow,
+.evo-delta--flat .evo-delta__value {
+  color: var(--text-muted);
+}
+
+/* Inline legend chips in the section subtitles */
+.evo-legend {
+  font-weight: 600;
+  white-space: nowrap;
+}
+.evo-legend--faster {
+  color: var(--zone-easy);
+}
+.evo-legend--slower {
+  color: var(--zone-sprint);
+}

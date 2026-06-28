@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Évolution des allures · Course à pied</title>
+    <meta name="description" content="L'évolution de mes allures de course dans le temps : avant / après entre chaque relevé, en min/km et km/h." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+
+  <body>
+    <nav class="site-nav" aria-label="Navigation principale">
+      <div class="site-nav__inner">
+        <a class="site-nav__brand" href="/">
+          <span class="site-nav__brand-dot" aria-hidden="true"></span>
+          Mon espace course
+        </a>
+        <div class="site-nav__links">
+          <a class="site-nav__link" href="/">Accueil</a>
+          <a class="site-nav__link" href="/allures">Allures</a>
+          <a class="site-nav__link" href="/evolution" aria-current="page">Évolution</a>
+          <a class="site-nav__link" href="/distance">Distances</a>
+        </div>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero__inner">
+        <p class="hero__eyebrow">Course à pied · Progression dans le temps</p>
+        <h1 class="hero__title">
+          L'<span class="hero__title-accent">évolution</span> de mes allures
+        </h1>
+        <p class="hero__subtitle">
+          Deux regards sur mes allures : ma <strong>progression réelle</strong>
+          d'un relevé à l'autre, et l'écart entre mes allures
+          <strong>actuelles</strong> et celles <strong>estimées</strong> en fin
+          de plan.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <div class="evo-tabs" role="tablist" aria-label="Choix de la comparaison">
+        <button
+          class="evo-tab"
+          type="button"
+          role="tab"
+          data-tab="progress"
+          aria-selected="true"
+        >
+          Au début <span class="evo-tab__arrow" aria-hidden="true">→</span> maintenant
+        </button>
+        <button
+          class="evo-tab"
+          type="button"
+          role="tab"
+          data-tab="forecast"
+          aria-selected="false"
+        >
+          Prévu <span class="evo-tab__arrow" aria-hidden="true">→</span> réel
+        </button>
+        <button
+          class="evo-tab"
+          type="button"
+          role="tab"
+          data-tab="plan"
+          aria-selected="false"
+        >
+          Actuelles <span class="evo-tab__arrow" aria-hidden="true">→</span> estimées
+        </button>
+      </div>
+
+      <section class="section section--intro" aria-labelledby="summary-title">
+        <div class="section__header">
+          <h2 id="summary-title" class="section__title" data-cmp-title>En bref</h2>
+          <p class="section__subtitle" data-cmp-subtitle></p>
+        </div>
+        <ul class="intro-grid" data-summary></ul>
+      </section>
+
+      <section class="section" aria-labelledby="competition-title">
+        <div class="section__header">
+          <h2 id="competition-title" class="section__title">Allures de compétition</h2>
+          <p class="section__subtitle">
+            Mes allures cibles sur les distances officielles. Une flèche
+            <span class="evo-legend evo-legend--faster">↘ verte</span> signale un
+            gain (allure plus rapide),
+            <span class="evo-legend evo-legend--slower">↗ rouge</span> une allure
+            plus lente.
+          </p>
+        </div>
+        <div class="cards" data-grid="competition"></div>
+      </section>
+
+      <section class="section section--calculator" aria-labelledby="training-title">
+        <div class="section__header">
+          <h2 id="training-title" class="section__title">Allures d'entraînement</h2>
+          <p class="section__subtitle">
+            De la récupération à la VMA — l'évolution de mes zones de travail,
+            de la plus lente à la plus rapide.
+          </p>
+        </div>
+        <div class="cards" data-grid="training"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>Évolution des allures · Format min/km — vitesse en km/h.</p>
+      <p class="footer__date">
+        Source : program-26-05.json &amp; program-28-06.json — semaine courante à
+        chaque date, et estimation de fin de plan.
+      </p>
+    </footer>
+
+    <script src="evolution.js" defer></script>
+  </body>
+</html>

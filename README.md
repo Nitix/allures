@@ -16,14 +16,16 @@ npx http-server . -p 8000
 ## Structure
 
 ```
-index.html     page d'accueil (hub) — liens vers les rubriques
-allures.html   page des allures (hero, intro, spectre, sections, calculateur)
-distance.html  analyse des distances hebdo + sorties longues (graphiques)
-style.css      design system sombre, layout responsive, animations
-app.js         données, helpers, rendu DOM, interactions (page allures)
-distance.js    dataset 18 semaines + rendu des graphiques (page distances)
-vercel.json    config de déploiement (clean URLs, cache headers)
-.vercelignore  exclusions pour le déploiement
+index.html       page d'accueil (hub) — liens vers les rubriques
+allures.html     page des allures (hero, intro, spectre, sections, calculateur)
+evolution.html   avant / après des allures entre relevés datés
+distance.html    analyse des distances hebdo + sorties longues (graphiques)
+style.css        design system sombre, layout responsive, animations
+app.js           données, helpers, rendu DOM, interactions (page allures)
+evolution.js     relevés datés (SNAPSHOTS) + rendu des comparaisons (page évolution)
+distance.js      dataset 18 semaines + rendu des graphiques (page distances)
+vercel.json      config de déploiement (clean URLs, cache headers)
+.vercelignore    exclusions pour le déploiement
 ```
 
 Aucune dépendance, aucun build.

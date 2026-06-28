@@ -2,27 +2,30 @@
 // Data
 // ---------------------------------------------------------------------------
 
+// Allures estimées — source : program-28-06.json, semaine courante au 28 juin
+// 2026 (semaine 3 du plan : 22→28 juin), pour coller aux valeurs affichées par
+// Campus. L'historique des versions est sur la page « Évolution » (evolution.js).
 const PACES = [
-  { slug: "slow", value: 650.0981393774688, dvalue: 40, abstract: true, competitive: false },
-  { slug: "moderate", value: 273.5458643550155, dvalue: 12.738018998628453, abstract: true, competitive: false },
-  { slug: "fast", value: 205.45916134124832, dvalue: 6.246283220150738, abstract: true, competitive: false },
-  { slug: "sprint", value: 164.02172905969422, dvalue: 3.5746469560858785, abstract: true, competitive: false },
-  { slug: "ef", value: 353.260058843394, dvalue: 22.110417551593613, abstract: false, competitive: false },
-  { slug: "tempo", value: 322.6854718240411, dvalue: 18.337926883466146, abstract: false, competitive: false },
-  { slug: "sweet-spot", value: 288.1804562000476, dvalue: 14.339873457427405, abstract: false, competitive: false },
-  { slug: "aerobie", value: 342.65279485191843, dvalue: 20.77892806783297, abstract: false, competitive: false },
-  { slug: "seuil60", value: 273.5458643550155, dvalue: 12.738018998628453, abstract: false, competitive: false },
-  { slug: "seuil30", value: 259.6544571148478, dvalue: 11.27558822713353, abstract: false, competitive: false },
-  { slug: "vma", value: 226.92731826039264, dvalue: 8.089764740219197, abstract: false, competitive: false },
-  { slug: "marathon", value: 312.5178219321211, dvalue: 15.859053078349017, abstract: false, competitive: true },
-  { slug: "half-marathon", value: 284.2456881881261, dvalue: 13.903318420139152, abstract: false, competitive: true },
-  { slug: "10km", value: 267.50565393428394, dvalue: 12.094873257667548, abstract: false, competitive: true },
-  { slug: "5km", value: 252.8473197080575, dvalue: 10.581276244414997, abstract: false, competitive: true },
-  { slug: "1500m", value: 229.2697706332543, dvalue: 8.30404943778259, abstract: false, competitive: true },
-  { slug: "endurance-confort", value: 367.0923125546691, dvalue: 23.88106360005505, abstract: true, competitive: false },
-  { slug: "endurance-fondamentale", value: 353.260058843394, dvalue: 22.110417551593613, abstract: true, competitive: false },
-  { slug: "endurance-active", value: 342.65279485191843, dvalue: 20.77892806783297, abstract: true, competitive: false },
-  { slug: "vo2max", value: 226.92731826039264, dvalue: 8.089764740219197, abstract: true, competitive: false },
+  { slug: "slow", value: 631.7701735532241, dvalue: 40, abstract: true, competitive: false },
+  { slug: "moderate", value: 264.6268027341291, dvalue: 9.755567962488263, abstract: true, competitive: false },
+  { slug: "fast", value: 198.46122431116115, dvalue: 7.0016948622180815, abstract: true, competitive: false },
+  { slug: "sprint", value: 158.24763884023022, dvalue: 7.4392015941835705, abstract: true, competitive: false },
+  { slug: "ef", value: 342.20167030600857, dvalue: 17.882362374198426, abstract: false, competitive: false },
+  { slug: "tempo", value: 312.4354502130143, dvalue: 14.345567953938614, abstract: false, competitive: false },
+  { slug: "sweet-spot", value: 278.86062681735723, dvalue: 10.948260563824176, abstract: false, competitive: false },
+  { slug: "aerobie", value: 331.8732566315678, dvalue: 16.60808001327557, abstract: false, competitive: false },
+  { slug: "seuil60", value: 264.6268027341291, dvalue: 9.755567962488263, abstract: false, competitive: false },
+  { slug: "seuil30", value: 251.1195127275994, dvalue: 8.79445830407304, abstract: false, competitive: false },
+  { slug: "vma", value: 219.3127359244279, dvalue: 7.320926493870341, abstract: false, competitive: false },
+  { slug: "marathon", value: 301.57554208265526, dvalue: 12.103468587505429, abstract: false, competitive: true },
+  { slug: "half-marathon", value: 274.2933090024231, dvalue: 10.54712208112707, abstract: false, competitive: true },
+  { slug: "10km", value: 258.05030199767657, dvalue: 9.265261037635897, abstract: false, competitive: true },
+  { slug: "5km", value: 243.83192432192627, dvalue: 8.353832598039672, abstract: false, competitive: true },
+  { slug: "1500m", value: 220.97199303213, dvalue: 7.3680516988594915, abstract: false, competitive: true },
+  { slug: "endurance-confort", value: 355.67273588285195, dvalue: 19.611327462562727, abstract: true, competitive: false },
+  { slug: "endurance-fondamentale", value: 342.20167030600857, dvalue: 17.882362374198426, abstract: true, competitive: false },
+  { slug: "endurance-active", value: 331.8732566315678, dvalue: 16.60808001327557, abstract: true, competitive: false },
+  { slug: "vo2max", value: 219.3127359244279, dvalue: 7.320926493870341, abstract: true, competitive: false },
 ];
 
 const META = {
