@@ -155,11 +155,11 @@ const COMPARISONS = { progress: PROGRESSION, forecast: FORECAST, plan: PLAN };
 
 // Libellés et regroupement des allures affichées.
 const META = {
-  marathon: { label: "Marathon", tag: "42,2 km", group: "competition" },
-  "half-marathon": { label: "Semi-marathon", tag: "21,1 km", group: "competition" },
-  "10km": { label: "10 km", tag: "10 km", group: "competition" },
-  "5km": { label: "5 km", tag: "5 km", group: "competition" },
-  "1500m": { label: "1500 m", tag: "1,5 km", group: "competition" },
+  marathon: { label: "Marathon", tag: "42,2 km", group: "competition", dist: 42.195 },
+  "half-marathon": { label: "Semi-marathon", tag: "21,1 km", group: "competition", dist: 21.0975 },
+  "10km": { label: "10 km", tag: "10 km", group: "competition", dist: 10 },
+  "5km": { label: "5 km", tag: "5 km", group: "competition", dist: 5 },
+  "1500m": { label: "1500 m", tag: "1,5 km", group: "competition", dist: 1.5 },
   slow: { label: "Footing très lent", tag: "Récup", group: "training" },
   "endurance-confort": { label: "Endurance confort", tag: "Confort", group: "training" },
   ef: { label: "Endurance fondamentale", tag: "EF", group: "training" },
@@ -194,6 +194,18 @@ function formatRaceTimeShort(totalSeconds) {
   const h = Math.floor(total / 3600);
   const m = Math.round((total % 3600) / 60);
   return h > 0 ? `${h}h${String(m).padStart(2, "0")}` : `${m} min`;
+}
+
+/** total seconds → "3h32:05" ou "20:18" */
+function formatRaceTime(totalSeconds) {
+  const total = Math.round(totalSeconds);
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  if (h > 0) {
+    return `${h}h${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  }
+  return `${m}:${String(s).padStart(2, "0")}`;
 }
 
 /** Map pace (sec/km) to a zone color CSS variable. */
@@ -269,6 +281,24 @@ function createEvolutionCard(cmp, slug) {
   const first = cmp.readings[0];
   const arrow = direction === "faster" ? "↘" : direction === "slower" ? "↗" : "→";
 
+  // Allures de compétition uniquement : temps de course estimé par relevé.
+  const raceRow = meta.dist
+    ? `
+    <div class="evo-race">
+      <span class="evo-race__label">Temps estimé · ${meta.tag}</span>
+      <div class="evo-race__values">
+        ${cmp.readings
+          .map((reading, i) => {
+            const isLast = i === cmp.readings.length - 1;
+            return `<span class="evo-race__time${
+              isLast ? " evo-race__time--current" : ""
+            }">${formatRaceTime(reading.paces[slug] * meta.dist)}</span>`;
+          })
+          .join('<span class="evo-race__arrow" aria-hidden="true">→</span>')}
+      </div>
+    </div>`
+    : "";
+
   card.innerHTML = `
     <span class="card__zone-bar" aria-hidden="true"></span>
     <header class="card__head">
@@ -279,6 +309,8 @@ function createEvolutionCard(cmp, slug) {
     <div class="evo-track" aria-label="Allure min/km par relevé">
       ${steps}
     </div>
+
+    ${raceRow}
 
     <div class="evo-delta evo-delta--${direction}">
       <span class="evo-delta__arrow" aria-hidden="true">${arrow}</span>
